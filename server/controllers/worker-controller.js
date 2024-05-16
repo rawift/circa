@@ -1,5 +1,5 @@
 const User = require("../model/User");
-
+const { MongoClient } = require('mongodb');
 
 
 
@@ -103,6 +103,26 @@ const getWorkerById = async (req, res) => {
         console.log(error)
     }
   };
+
+
+  const pricing = async (req, res, next) => {
+    try {
+      const client = new MongoClient("mongodb+srv://rawift:84LSnr4EQREZIO8s@cluster0.psky9qy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", { useNewUrlParser: true, useUnifiedTopology: true });
+      await client.connect();
+      const database = client.db('new_database');
+      const collection = database.collection('workers');
+      const result = await collection.find({}).toArray();
+
+      const user = result.find(item => item.email_id === req.body.email);
+      //console.log(user.price,req.body.email);
+       return res.status(200).json({price:user.price})
+        
+    } catch (error) {
+        console.log(error)
+    }
+  };
+
+  exports.pricing= pricing
 
 exports.unliveworker = unliveworker
   exports.getAllworker = getAllworker;

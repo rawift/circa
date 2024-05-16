@@ -3,7 +3,8 @@ const {
   worker,
   getAllworker,
   getWorkerById,
-  unliveworker
+  unliveworker,
+  pricing
 } = require("../controllers/worker-controller");
 
 const {
@@ -21,5 +22,6 @@ router.post("/worker", verifyToken, worker);
 router.get("/unlive", verifyToken, unliveworker);
 router.get("/allworker",getAllworker)
 router.get("/workerdetail/:id",getWorkerById)
+router.post("/pricing",pricing)
 
 module.exports = router;
